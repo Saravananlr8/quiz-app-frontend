@@ -1,0 +1,27 @@
+<div class="quiz-container">
+  <button (click)="logout()">
+    Logout
+  </button>
+  <h1>Available Quizzes</h1>
+
+  @for (quiz of quizzes(); track quiz.id) {
+
+    <div class="quiz-card">
+
+      <h2>{{ quiz.title }}</h2>
+
+      <p>{{ quiz.description }}</p>
+
+      <div class="duration">
+        ⏱ {{ quiz.durationInMinutes }} Minutes
+      </div>
+
+      <button class="take-btn">
+        Take Quiz
+      </button>
+
+    </div>
+
+  }
+
+</div>
