@@ -1,33 +1,50 @@
-<div class="login-container">
+<div class="login-page">
 
-    <div class="login-card">
+  <div class="left-panel">
+    <div class="brand-content">
+      <h1>Quiz App</h1>
+      <h2>Test Your Knowledge</h2>
+      <div class="divider"></div>
+      <p>Create quizzes, challenge yourself, and track your progress.</p>
 
-        <h1>Quiz App</h1>
-
-        <h2>Login</h2>
-
-        <div class="form-group">
-            <label>Email</label>
-
-            <input
-                type="email"
-                [(ngModel)]="email"
-                placeholder="Enter your email">
+      <div class="feature-badge">
+        <span class="icon">🎓</span>
+        <div>
+          <h3>Learn. Challenge. Improve.</h3>
+          <p>All in one place.</p>
         </div>
-
-        <div class="form-group">
-            <label>Password</label>
-
-            <input
-                type="password"
-                [(ngModel)]="password"
-                placeholder="Enter your password">
-        </div>
-
-        <button (click)="onLogin()">
-            Login
-        </button>
-
+      </div>
     </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="login-card">
+      <h2>Login</h2>
+
+      <div class="form-group">
+        <label>Email</label>
+        <div class="input-wrapper">
+          <input
+            type="email"
+            [(ngModel)]="email"
+            placeholder="Enter your email">
+          <span class="input-icon">✉️</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrapper">
+          <input
+            type="password"
+            [(ngModel)]="password"
+            placeholder="Enter your password">
+          <span class="input-icon">🔒</span>
+        </div>
+      </div>
+
+      <button (click)="onLogin()">Login</button>
+    </div>
+  </div>
 
 </div>

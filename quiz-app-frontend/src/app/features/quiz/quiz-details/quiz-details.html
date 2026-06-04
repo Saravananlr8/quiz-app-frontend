@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+
+<div class="details-view-wrapper">
+  @if (quiz()) {
+    <div class="details-view-container">
+
+      <div class="quiz-info-billboard">
+        <div class="accent-glow"></div>
+        <span class="live-indicator">⚡ ACTIVE ASSESSMENT</span>
+        <h1>{{ quiz().title }}</h1>
+
+        <div class="billboard-meta-row">
+          <div class="meta-pill">
+            <span class="icon">📋</span>
+            <span>{{ totalQuestionsCount() }} Questions</span>
+          </div>
+          <div class="meta-pill">
+            <span class="icon">⏱️</span>
+            <span>{{ quiz().durationInMinutes }} Minutes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="questions-stack">
+        @for (question of quiz().questions; track question.id; let qIdx = $index) {
+          <div class="question-card">
+
+            <div class="card-top-bar">
+              <span class="question-index-tag">QUESTION {{ qIdx + 1 }}</span>
+              <span class="points-tag">[{{ question.marks || 1 }} Point(s)]</span>
+            </div>
+
+            <h3 class="question-text-title">{{ question.questionText }}</h3>
+
+            <div class="options-container-list">
+              @for (option of question.options; track option.id) {
+                <div
+                  class="option-selection-row"
+                  [class.is-active]="isOptionSelected(question.id, option.id)"
+                  (click)="handleOptionSelection(question.id, option.id)"
+                >
+                  <div class="radio-outer-circle">
+                    <div class="radio-inner-dot"></div>
+                  </div>
+                  <span class="option-text-label">{{ option.optionText }}</span>
+                </div>
+              }
+            </div>
+
+          </div>
+        }
+      </div>
+
+      <div class="quiz-submit-footer-card">
+        <div class="progress-status-block">
+          <div class="progress-meta">
+            <span class="progress-label">Assessment Progress:</span>
+            <span class="progress-numbers">Answered {{ answeredCount() }} / {{ totalQuestionsCount() }}</span>
+          </div>
+          <div class="progress-bar-track">
+            <div
+              class="progress-bar-fill"
+              [style.width.%]="(answeredCount() / totalQuestionsCount()) * 100"
+            ></div>
+          </div>
+        </div>
+
+        <button class="quiz-submit-btn" (click)="onSubmitQuiz()">
+          <span>Submit Quiz Assessment</span>
+          <span class="arrow-icon">➔</span>
+        </button>
+      </div>
+
+    </div>
+  } @else {
+    <div class="loading-state-panel">
+      <div class="animated-spinner"></div>
+      <p>Syncing question blueprints securely from remote server, please hold da...</p>
+    </div>
+  }
+</div>

@@ -1,0 +1,92 @@
+<app-navbar></app-navbar>
+
+<div class="form-wrapper">
+  <div class="form-container">
+
+    <header class="form-header">
+      <h1>Create New Quiz</h1>
+      <p>Configure your test details, write questions, and set the correct answers.</p>
+    </header>
+
+    <form #quizForm="ngForm" (ngSubmit)="submitQuiz()">
+
+      <div class="form-card main-details">
+        <h3>🎯 Quiz Details</h3>
+
+        <div class="input-group">
+          <label>Quiz Title</label>
+          <input type="text" name="title" [(ngModel)]="quiz.title" placeholder="e.g., C# Advanced Concepts" required />
+        </div>
+
+        <div class="input-group">
+          <label>Description</label>
+          <textarea name="description" [(ngModel)]="quiz.description" placeholder="Describe what this quiz covers..." rows="3"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Duration (In Minutes)</label>
+          <input type="number" name="durationInMinutes" [(ngModel)]="quiz.durationInMinutes" min="1" required />
+        </div>
+      </div>
+
+      <div class="questions-section">
+        <h3>🧩 Questions Section</h3>
+
+        @for (question of quiz.questions; track $index; let qIndex = $index) {
+          <div class="form-card question-card">
+            <div class="question-header">
+              <h4>Question #{{ qIndex + 1 }}</h4>
+              <div class="marks-input">
+                <label>Marks:</label>
+                <input type="number" [name]="'marks-' + qIndex" [(ngModel)]="question.marks" min="1" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <input type="text" [name]="'qText-' + qIndex" [(ngModel)]="question.questionText" placeholder="Enter your question question statement here..." required />
+            </div>
+
+            <div class="options-block">
+              <h5>Options Configuration</h5>
+
+              @for (option of question.options; track $index; let oIndex = $index) {
+                <div class="option-row">
+                  <input
+                    type="checkbox"
+                    [name]="'isCorrect-' + qIndex + '-' + oIndex"
+                    [(ngModel)]="option.isCorrect"
+                    (change)="setCorrectOption(question, oIndex)"
+                  />
+
+                  <input
+                    type="text"
+                    [name]="'optText-' + qIndex + '-' + oIndex"
+                    [(ngModel)]="option.optionText"
+                    placeholder="Option {{ oIndex + 1 }} text..."
+                    required
+                  />
+                </div>
+              }
+
+              <button type="button" class="add-opt-btn" (click)="addOption(question)">
+                ➕ Add Option
+              </button>
+            </div>
+          </div>
+        }
+
+        <button type="button" class="add-q-btn" (click)="addQuestion()">
+          🚀 Add Question Block
+        </button>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="create-btn">
+          💾 Create & Publish Quiz
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
