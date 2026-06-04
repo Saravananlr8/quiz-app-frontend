@@ -2,11 +2,12 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Quiz } from '../../../core/services/quiz';
 import { Router } from '@angular/router';
+import { Navbar } from '../../../layout/navbar/navbar';
 
 @Component({
   selector: 'app-quiz-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Navbar],
   templateUrl: './quiz-list.html',
   styleUrl: './quiz-list.scss',
 })
@@ -35,5 +36,13 @@ export class QuizList implements OnInit {
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
+  }
+
+  goToCreateQuiz() {
+    this.router.navigate(['/create-quiz']);
+  }
+
+  startQuiz(id: number) {
+    this.router.navigate(['/quizzes', id]);
   }
 }

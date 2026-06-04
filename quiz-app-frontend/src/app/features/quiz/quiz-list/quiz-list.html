@@ -1,27 +1,51 @@
-<div class="quiz-container">
-  <button (click)="logout()">
-    Logout
-  </button>
-  <h1>Available Quizzes</h1>
+    <app-navbar></app-navbar>
 
-  @for (quiz of quizzes(); track quiz.id) {
+    <div class="dashboard-wrapper">
 
-    <div class="quiz-card">
+      <div class="quiz-container">
+        <header class="dashboard-header">
+          <div class="header-content">
+          <div>
+            <h1>Available Quizzes</h1>
+          </div>
 
-      <h2>{{ quiz.title }}</h2>
+          <button
+            class="create-btn"
+            (click)="goToCreateQuiz()">
+            ✨ Create Quiz
+          </button>
+        </div>
 
-      <p>{{ quiz.description }}</p>
+      </header>
 
-      <div class="duration">
-        ⏱ {{ quiz.durationInMinutes }} Minutes
+        <div class="quiz-grid">
+          @for (quiz of quizzes(); track quiz.id) {
+            <div class="quiz-card">
+              <div class="card-main">
+                <div class="card-top-row">
+                  <div class="mini-icon">⚡</div>
+                  <span class="quiz-id-tag">#{{$index + 1}}</span>
+                </div>
+
+                <div class="card-info">
+                  <h2>{{ quiz.title }}</h2>
+                  <p>{{ quiz.description || 'No description available' }}</p>
+                </div>
+              </div>
+
+              <div class="card-action-row">
+                <div class="time-pill">
+                  <span class="clock">⏱️</span>
+                  <span>{{ quiz.durationInMinutes }}m</span>
+                </div>
+
+                <button class="action-btn" (click)="startQuiz(quiz.id)">
+                  <span>Start</span>
+                  <span class="arrow">➔</span>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
       </div>
-
-      <button class="take-btn">
-        Take Quiz
-      </button>
-
     </div>
-
-  }
-
-</div>

@@ -1,65 +1,263 @@
-.quiz-container {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
+// Layout Wrapper - TURNED INTO A SELF-CONTAINED SCROLL CONTAINER
+.dashboard-wrapper {
+  position: fixed; // Fixes it below the navbar context
+  top: 70px;       // Starts right after the 70px navbar
+  left: 0;
+  width: 100%;
+  // CRITICAL FIX: Forces this specific view to compute its own scrolling bounds
+  height: calc(100vh - 70px) !important;
+  overflow-y: scroll !important; // FORCE SHOW THE SCROLLBAR
+  overflow-x: hidden !important;
+
+  // Back to our sleek premium background gradient
+  background: radial-gradient(circle at 50% 0%, #111827 0%, #0b1329 70%, #030712 100%);
+  padding: 2.5rem 2rem 5rem 2rem; // Bottom padding gives breathing room after card 8
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  // Custom premium thin scrollbar so it doesn't look ugly or default
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #030712;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(56, 189, 248, 0.2);
+    border-radius: 10px;
+    &:hover {
+      background: rgba(56, 189, 248, 0.4);
+    }
+  }
+
+  .dashboard-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 0);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
-.quiz-container h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
-}
+.create-btn {
+  background: linear-gradient(
+    135deg,
+    #2563eb,
+    #38bdf8
+  );
 
-.quiz-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
-
-  box-shadow:
-    0 2px 8px rgba(0,0,0,0.08);
-
-  transition: all 0.3s ease;
-}
-
-.quiz-card:hover {
-  transform: translateY(-4px);
-
-  box-shadow:
-    0 8px 20px rgba(0,0,0,0.15);
-}
-
-.quiz-card h2 {
-  margin-bottom: 10px;
-  color: #2563eb;
-}
-
-.quiz-card p {
-  color: #555;
-}
-
-.duration {
-  margin-top: 15px;
-  font-weight: 600;
-  color: #666;
-}
-
-.take-btn {
-  margin-top: 15px;
-
-  background: #2563eb;
   color: white;
 
   border: none;
-  border-radius: 8px;
 
-  padding: 10px 20px;
+  border-radius: 12px;
+
+  padding: 0.9rem 1.4rem;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.3s;
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 10px 20px rgba(37, 99, 235, 0.25);
 }
 
-.take-btn:hover {
-  background: #1d4ed8;
+.create-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 30px rgba(37, 99, 235, 0.35);
+}
+.quiz-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+
+  h1 {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header-divider {
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #38bdf8);
+    margin: 0 auto 0.8rem auto;
+    border-radius: 10px;
+  }
+
+  p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+  }
+}
+
+// Grid Architecture - Fits 4 columns on monitor screens nicely
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+// Mini Tech Card Styling
+.quiz-card {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.3);
+    background: rgba(22, 32, 59, 0.7);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5), 0 0 15px rgba(37, 99, 235, 0.1);
+
+    .mini-icon {
+      background: rgba(37, 99, 235, 0.25);
+      color: #38bdf8;
+    }
+  }
+
+  .card-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+
+    .mini-icon {
+      font-size: 1rem;
+      color: #94a3b8;
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-id-tag {
+      font-size: 0.75rem;
+      color: #64748b;
+      font-weight: 700;
+      font-family: monospace;
+    }
+  }
+
+  .card-info {
+    h2 {
+      color: #ffffff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    p {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .card-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1rem;
+    margin-top: 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .time-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.35rem 0.65rem;
+    border-radius: 8px;
+    color: #cbd5e1;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .action-btn {
+    flex-grow: 1;
+    max-width: 110px;
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 0.45rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    transition: all 0.2s ease;
+
+    .arrow {
+      transition: transform 0.2s ease;
+      font-size: 0.75rem;
+    }
+
+    &:hover {
+      background: #1d4ed8;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+      .arrow { transform: translateX(3px); }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    padding: 2rem 1rem 4rem 1rem;
+  }
 }

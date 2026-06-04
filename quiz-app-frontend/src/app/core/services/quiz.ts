@@ -14,4 +14,14 @@ export class Quiz {
           `${this.apiUrl}/quizzes`
       );
   }
+  createQuiz(quizData: any) {
+    return this.http.post(
+      `${this.apiUrl}/create/quiz`,
+      quizData
+    );
+  }
+   getQuizById(id: number) {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
 }
